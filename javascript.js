@@ -30,51 +30,81 @@ Bonus - track results and update on results
 */
 
 
-// vars
+// Global variables
 let drawMessage = "It's a draw!";
 let winMessage = "You win!!";
 let loseMessage = "You lose.";
+const messages = [drawMessage, winMessage, loseMessage];
 
-let userScore = 0;
+let humanScore = 0;
 let computerScore = 0;
 let drawScore = 0;
 
-let playing = true;
+const computerOptions = ["rock", "paper", "scissors"];
 
-while(playing){
+let numberOfRounds = 5;
 
-    let userChoice = prompt("Enter rock, paper, scissors (or x to exit)").trim().toLowerCase();
+// main
+playGame(numberOfRounds);
 
-    if(userChoice === "x"){
-        console.log("Thanks for playing!");
-        break;
+// Helper functions
+function playGame(rounds){
+    let playARound = true;
+    let roundCount = 0
+
+    while(playARound && roundCount < rounds){
+
+        let humanChoice = getHumanChoice();
+        console.log("You chose:", humanChoice);
+
+        if(humanChoice.toLowerCase() === "x"){
+            console.log("Thanks for playing!");
+            break;
+        }
+
+        let compChoice = getComputerChoice();
+
+        if (!computerOptions.includes(humanChoice)) {
+            console.log("Invalid choice. Please enter rock, paper, scissors, or x to exit.");
+            continue;
+        }
+
+        playRound(humanChoice, compChoice);
+        roundCount++;
+        showScore(scores);
     }
+}
 
-    console.log("You chose:", userChoice);
+function getRandomInt(maxNum){
+    return Math.floor(Math.random() * maxNum);
+}
 
-    // computer choice
-    const computerOptions = ["rock", "paper", "scissors"];
+function getComputerChoice(){
     let randInt = getRandomInt(3);
     let computerChoice = computerOptions[randInt];
-
-    if (!computerOptions.includes(userChoice)) {
-        console.log("Invalid choice. Please enter rock, paper, scissors, or x to exit.");
-        continue;
-    }
 
     //console.log("random int:", randInt);
     console.log("Computer chose:", computerChoice);
 
+    return computerChoice;
+}
+
+function getHumanChoice(){
+    return prompt("Enter rock, paper, scissors (or x to exit)").trim().toLowerCase();
+}
+
+
+function playRound(humanChoice, compChoice ){
     // game logic
-    switch (userChoice)
+    switch (humanChoice)
     {
         case "rock":
-            if (computerChoice === "rock"){
+            if (compChoice === "rock"){
                 console.log(drawMessage);
                 drawScore++;
-            } else if (computerChoice === "scissors"){
+            } else if (compChoice === "scissors"){
                 console.log(winMessage);
-                userScore++;
+                humanScore++;
             } else {
                 console.log(loseMessage);
                 computerScore++;
@@ -82,12 +112,12 @@ while(playing){
             break;
 
         case "paper":
-            if (computerChoice === "paper"){
+            if (compChoice === "paper"){
                 console.log(drawMessage);
                 drawScore++;
-            } else if (computerChoice === "rock"){
+            } else if (compChoice === "rock"){
                 console.log(winMessage);
-                userScore++;
+                humanScore++;
             } else {
                 console.log(loseMessage);
                 computerScore++;
@@ -95,29 +125,26 @@ while(playing){
             break;
 
         case "scissors":
-            if (computerChoice === "scissors"){
+            if (compChoice === "scissors"){
                 console.log(drawMessage);
                 drawScore++;
-            } else if (computerChoice === "paper"){
+            } else if (compChoice === "paper"){
                 console.log(winMessage);
-                userScore++;
+                humanScore++;
             } else {
                 console.log(loseMessage);
                 computerScore++;
             }
             break;
-
         default:
             console.log("Invalid choice");
     }
-
-    // Show score
-    console.log("Score:");
-    console.log("Your Score:", userScore);
-    console.log("Computer:", computerScore);
-    console.log("Draws:", drawScore);
 }
 
-function getRandomInt(maxNum){
-    return Math.floor(Math.random() * maxNum);
+function showScore(){
+    // Show score
+    console.log("Score:");
+    console.log("Your Score:", humanScore);
+    console.log("Computer:", computerScore);
+    console.log("Draws:", drawScore);
 }
