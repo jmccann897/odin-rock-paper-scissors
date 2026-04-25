@@ -6,6 +6,19 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="gameContainer" style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; height: 100vh;">
+        <div id="options">
+            <button id="rock" style="padding:15px 25px; font-size:18px;">Rock</button>
+            <button id="paper" style="padding:15px 25px; font-size:18px;">Paper</button>
+            <button id="scissors" style="padding:15px 25px; font-size:18px;">Scissors</button>
+            <button id="end" style="padding:15px 25px; font-size:18px;">X</button>
+        </div>
+        <div class="output">
+            <div id="results"></div>
+            <div id="score"></div>
+            <div id="gameOver"></div>
+        </div>
+    </div>
     <script src="./javascript.js"></script>
 </body>
 </html>
